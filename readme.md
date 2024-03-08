@@ -15,19 +15,19 @@ y poner en el navegador http://localhost/laravel56/public
 
 y si es con composer 
 
-descargar el proyecto en cualquier lugar del sistema y correr los siguientes comandos
-composer install 
-composer update --no-scripts 
-php artisan key:generate
- Configurar el archivo .env.example y cambiarle el nombre a .env
- agregar credenciales
-php artisan migrate 
-php artisan serve
-htt://127.0.0.1:8000
+descargar el proyecto en cualquier lugar del sistema y correr los siguientes comandos</br>
+composer install </br>
+composer update --no-scripts </br>
+php artisan key:generate</br>
+ Configurar el archivo .env.example y cambiarle el nombre a .env</br>
+ agregar credenciales</br>
+php artisan migrate </br>
+php artisan serve</br>
+htt://127.0.0.1:8000</br>
 
-login  user  : localhost/laravel56/public/login
-user: admin@admin.com
-pass. 123456
-login admin : localhost/laravel56/public/admin
-user: admin@admin.com
-pass: hugoiman
+login  user  : localhost/laravel56/public/login </br>
+user: admin@admin.com</br>
+pass. 123456</br>
+login admin : localhost/laravel56/public/admin</br>
+user: admin@admin.com</br>
+pass: hugoiman</br>
