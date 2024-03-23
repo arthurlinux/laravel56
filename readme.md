@@ -31,3 +31,6 @@ pass. 123456</br>
 login admin : localhost/laravel56/public/admin</br>
 user: admin@admin.com</br>
 pass: hugoiman</br>
+
+Crear un endpoint
+
