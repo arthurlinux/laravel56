@@ -6,8 +6,8 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">Usuarios</div>
-
                 <div class="card-body">
+                  <button type="button" class="btn btn-success"  data-mdb-ripple-init><a class="nav-link" href="{{ route('getusuario') }}">{{ __('Agregar') }}</a></button>
                     <table class="table align-middle mb-0 bg-white">
                         <thead class="bg-light">
                           <tr>
@@ -34,8 +34,15 @@
                                           class="btn btn-link btn-rounded btn-sm fw-bold"
                                           data-mdb-ripple-color="dark"
                                           >
-                                    Edit
+                                          <a class="btn btn-primary" href="{{ route('editusuario',$usuario->id) }}">Editar</a>
                                   </button>
+                                  <button
+                                  type="button"
+                                  class="btn btn-link btn-rounded btn-sm fw-bold"
+                                  data-mdb-ripple-color="dark"
+                                  >
+                                  <a class="btn btn-primary" href="{{ route('deleteusuario',$usuario->id) }}">Eliminar</a>
+                          </button>
                                 </td>
                               </tr>
                             @endforeach

@@ -33,4 +33,4 @@ user: admin@admin.com</br>
 pass: hugoiman</br>
 
 Crear un endpoint
-
+php artisan make:model Usuarios -crm

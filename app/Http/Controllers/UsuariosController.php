@@ -29,13 +29,13 @@ class UsuariosController extends Controller
         //
         $data = $request->all();
         $usuario = Usuarios::create([
-            'nombre' => $data['nombre'],
-            'apellido_paterno' => $data['apellido_paterno'],
-            'apellido_materno' => $data['apellido_materno'],
-            'sexo' => $data['sexo'],
-            'email' => $data['email'],
+            'nombre' => $request->input('nombre'),
+            'apellido_paterno' => $request->input('apellido_paterno'),
+            'apellido_materno' => $request->input('apellido_materno'),
+            'sexo' => $request->input('sexo'),
+            'email' => $request->input('email')
         ]);
-        return response(view('usuarios.create'));
+        return response(view('usuarios', ['usuarios' => Usuarios::all()]));
     }
 
     /**
@@ -46,7 +46,7 @@ class UsuariosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return response(view('createusuario'));
     }
 
     /**
@@ -63,12 +63,15 @@ class UsuariosController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Usuarios  $usuarios
+     * @param  \Illuminate\Http\Request  $request
+    * @param  \App\Usuarios  $usuarios
      * @return \Illuminate\Http\Response
      */
-    public function edit(Usuarios $usuarios)
+    public function edit($id)
     {
         //
+        $usuario = Usuarios::find($id);
+        return response(view('editusuario', ['usuario' => $usuario]));
     }
 
     /**
@@ -78,9 +81,18 @@ class UsuariosController extends Controller
      * @param  \App\Usuarios  $usuarios
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Usuarios $usuarios)
+    public function update(Request $request, Usuarios $usuarios, $id)
     {
         //
+        $data = $request->all();
+        $usuario = Usuarios::find($id);
+        $usuario->nombre = $request->input('nombre');
+        $usuario->apellido_paterno = $request->input('apellido_paterno');
+        $usuario->apellido_materno = $request->input('apellido_materno');
+        $usuario->sexo = $request->input('sexo');
+        $usuario->email = $request->input('email');
+        $usuario->save();
+        return response(view('usuarios', ['usuarios' => Usuarios::all()]));
     }
 
     /**
@@ -89,8 +101,11 @@ class UsuariosController extends Controller
      * @param  \App\Usuarios  $usuarios
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Usuarios $usuarios)
+    public function destroy(Usuarios $usuarios, $id)
     {
         //
+        $usuario = Usuarios::find($id);
+        $usuario->delete();
+        return response(view('usuarios', ['usuarios' => Usuarios::all()]));
     }
 }
