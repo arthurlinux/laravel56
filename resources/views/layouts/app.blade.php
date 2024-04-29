@@ -67,6 +67,15 @@
                                         <a class="nav-link" href="{{ route('usuarios') }}">{{ __('Usuarios') }}</a>
                                     </li>
                                     <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('empresas') }}">{{ __('Empresas') }}</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('modulos') }}">{{ __('Modulos') }}</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('tickets') }}">{{ __('Tickets') }}</a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a class="nav-link" href="{{ route('createusuario') }}">{{ __('Crear usuario') }}</a>
                                     </li>
                                     

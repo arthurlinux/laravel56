@@ -29,4 +29,28 @@ Route::group(['prefix' => 'admin'], function(){
   Route::get('/getusuario', 'UsuariosController@store')->name('getusuario');
   Route::post('/createusuario', 'UsuariosController@create')->name('createusuario');
   Route::get('/deleteusuario/{id}', 'UsuariosController@destroy')->name('deleteusuario');
+
+  Route::get('/empresas', 'EmpresaController@index')->name('empresas');
+  Route::get('/editempresa/{id}', 'EmpresaController@edit')->name('editempresa');
+  Route::post('/updateempresa/{id}', 'EmpresaController@update')->name('updateempresa');
+  Route::get('/getempresa', 'EmpresaController@store')->name('getempresa');
+  Route::post('/createempresa', 'EmpresaController@create')->name('createempresa');
+  Route::get('/deleteempresa/{id}', 'EmpresaController@destroy')->name('deleteempresa');
+
+  Route::get('/modulos', 'ModuloController@index')->name('modulos');
+  Route::get('/editmodulo/{id}', 'ModuloController@edit')->name('editmodulo');
+  Route::post('/updatemodulo/{id}', 'ModuloController@update')->name('updatemodulo');
+  Route::get('/getmodulo', 'ModuloController@store')->name('getmodulo');
+  Route::post('/createmodulo', 'ModuloController@create')->name('createmodulo');
+  Route::get('/deletemodulo/{id}', 'ModuloController@destroy')->name('deletemodulo');
+
+  Route::get('/tickets', 'TicketsController@index')->name('tickets');
+  Route::get('/editticket/{id}', 'TicketsController@edit')->name('editticket');
+  Route::post('/updateticket/{id}', 'TicketsController@update')->name('updateticket');
+  Route::get('/getticket', 'TicketsController@store')->name('getticket');
+  Route::post('/createticket', 'TicketsController@create')->name('createticket');
+  Route::get('/deleteticket/{id}', 'TicketsController@destroy')->name('deleteticket');
+  
+
+
 });
