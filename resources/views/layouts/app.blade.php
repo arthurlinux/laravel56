@@ -44,9 +44,12 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
-                            <li class="nav-item">
+                            
+                            {{-- <li class="nav-item">
                                 <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                            </li>
+                            </li>  --}}
+                            
+
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -63,6 +66,7 @@
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
+                                    @if(Auth::user()->tipo === 'Admin')
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ route('usuarios') }}">{{ __('Usuarios') }}</a>
                                     </li>
@@ -72,12 +76,14 @@
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ route('modulos') }}">{{ __('Modulos') }}</a>
                                     </li>
+                                    @endif
+
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ route('tickets') }}">{{ __('Tickets') }}</a>
                                     </li>
-                                    <li class="nav-item">
+                                    {{-- <li class="nav-item">
                                         <a class="nav-link" href="{{ route('createusuario') }}">{{ __('Crear usuario') }}</a>
-                                    </li>
+                                    </li> --}}
                                     
                                 </div>
                             </li>

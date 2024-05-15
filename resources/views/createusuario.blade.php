@@ -22,7 +22,9 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="form-group row">
+                    </div>
+
+                        {{-- <div class="form-group row">
                             <label for="apellido_paterno" class="col-md-4 col-form-label text-md-right">{{ __('Apellido Paerno') }}</label>
 
                             <div class="col-md-6">
@@ -60,7 +62,7 @@
                                     </span>
                                 @endif
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Email') }}</label>
 
@@ -74,7 +76,27 @@
                                 @endif
                             </div>
                         </div>
-                        
+                        <div class="form-group row">
+                            <label for="tipo" class="col-md-4 col-form-label text-md-right">{{ __('Tipo') }}</label>
+                            <div class="col-md-6">
+                                <select name="tipo" id="tipo" class="form-control">
+                                    <option value="Admin">Admin</option>
+                                    <option value="Agente">Agente</option>
+                                    <option value="Cliente">Cliente</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Contraseña') }}</label>
+                            <div class="col-md-6">
+                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+                                @if ($errors->has('password'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button  class="btn btn-secundary">

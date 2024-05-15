@@ -25,8 +25,8 @@
           </select>
           <label for="usuario">Usuario</label>
           <select class="form-control" id="usuario" name="usuario">
-            @foreach ($usuarios as $usuario)
-              <option value="{{ $usuario->id }}">{{ $usuario->nombre }}</option>
+            @foreach ($user as $usuario)
+              <option value="{{ $usuario->id }}">{{ $usuario->name }}</option>
             @endforeach
           </select>
           {{-- <label for="empresa">Empresa</label>

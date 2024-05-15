@@ -12,22 +12,23 @@
                         <thead class="bg-light">
                           <tr>
                             <th>Nombre</th>
-                            <th>Apellido paterno</th>
+                            {{-- <th>Apellido paterno</th>
                             <th>Apellido materno</th>
-                            <th>Sexo</th>
+                            <th>Sexo</th> --}}
                             <th>Correo</th>
+                            <th>Tipo</th>
                             <th>Acciones</th>
                           </tr>
                         </thead>
                         <tbody>
-                            @foreach($usuarios as $usuario)
+                            @foreach($user as $usuario)
 
                             <tr>
-                                <td>{{ $usuario->nombre }}</td>
-                                <td>{{ $usuario->apellido_paterno }}</td>
-                                <td>{{ $usuario->apellido_materno }}</td>
-                                <td>{{ $usuario->sexo }}</td>
+                                <td>{{ $usuario->name }}</td>
                                 <td>{{ $usuario->email }}</td>
+                                <td>{{ $usuario->tipo }}</td>
+                                {{-- <td>{{ $usuario->sexo }}</td>
+                                <td>{{ $usuario->email }}</td> --}}
                                 <td>
                                   <button
                                           type="button"
@@ -48,6 +49,26 @@
                             @endforeach
                         </tbody>
                       </table>
+                      {{-- <table>
+                        <thead>
+                          <tr>Nombre</tr>
+                          <tr>Correo</tr>
+                          <tr>Tipo</tr>
+                        </thead>
+                        <tbody>
+                          @foreach($user as $users)
+                          <tr>
+                            <td>{{ $users->nombre }}</td>
+                            <td>{{ $users->email }}</td>
+                            <td>{{ $users->tipo }}</td>
+                          </tr>
+                          @endforeach
+                        <tr>
+                          <td>
+                            <button type="button" class="btn btn-success"  data-mdb-ripple-init><a class="nav-link" href="{{ route('home') }}">{{ __('Regresar') }}</a></button>
+                          </td>
+                        </tr>
+                      </table> --}}
                 </div>
             </div>
         </div>

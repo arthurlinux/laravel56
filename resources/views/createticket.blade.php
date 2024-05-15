@@ -60,7 +60,7 @@
                             <div class="form-group row">
                                 <label for="imagen"
                                     class="col-md-4 col-form-label text-md-right">{{ __('Imagen') }}</label>
-                                <input type="file" name="imagen" id="imagen" class="form-control">
+                                <input type="file" name="upload[]" id="imagen" class="form-control">
                             </div>
 
                             <div class="form-group row mb-0">

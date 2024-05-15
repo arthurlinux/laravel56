@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Usuarios;
 use App\Empresa;
 use App\Modulo;
-
+use App\User;
 
 class TicketsController extends Controller
 {
@@ -77,10 +77,10 @@ class TicketsController extends Controller
         //
         $prioridades = ['BAJA', 'MEDIA', 'ALTA'];
         $ticket = Tickets::find($id);
-        $usuarios = Usuarios::all();
+        $usuarios = User::where('tipo', 'Agente')->get();
         $empresas = Empresa::all();
         $modulos = Modulo::all();
-        return response(view('editticket', ['ticket' => $ticket, 'usuarios' => $usuarios, 'empresas' => $empresas, 'modulos' => $modulos, 'prioridades' => $prioridades]));
+        return response(view('editticket', ['ticket' => $ticket, 'user' => $usuarios, 'empresas' => $empresas, 'modulos' => $modulos, 'prioridades' => $prioridades]));
     }
 
     /**

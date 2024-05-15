@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Usuarios;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UsuariosController extends Controller
 {
@@ -15,7 +17,8 @@ class UsuariosController extends Controller
     public function index()
     {
         //
-        return response(view('usuarios', ['usuarios' => Usuarios::all()]));
+        $user = User::all();
+        return response(view('usuarios', ['usuarios' => Usuarios::all()], ['user' => $user]));
     }
 
     /**
@@ -28,14 +31,15 @@ class UsuariosController extends Controller
     {
         //
         $data = $request->all();
-        $usuario = Usuarios::create([
-            'nombre' => $request->input('nombre'),
-            'apellido_paterno' => $request->input('apellido_paterno'),
-            'apellido_materno' => $request->input('apellido_materno'),
-            'sexo' => $request->input('sexo'),
-            'email' => $request->input('email')
+        $usuario = User::create([
+            'name' => $request->input('nombre'),
+            'email' => $request->input('email'),
+            // ...
+
+            'tipo' => $request->input('tipo'),
+            'password' => Hash::make($request->input('password')),
         ]);
-        return response(view('usuarios', ['usuarios' => Usuarios::all()]));
+        return response(view('usuarios', ['user' => User::all()]));
     }
 
     /**
@@ -70,7 +74,7 @@ class UsuariosController extends Controller
     public function edit($id)
     {
         //
-        $usuario = Usuarios::find($id);
+        $usuario = User::find($id);
         return response(view('editusuario', ['usuario' => $usuario]));
     }
 
@@ -85,14 +89,16 @@ class UsuariosController extends Controller
     {
         //
         $data = $request->all();
-        $usuario = Usuarios::find($id);
-        $usuario->nombre = $request->input('nombre');
-        $usuario->apellido_paterno = $request->input('apellido_paterno');
-        $usuario->apellido_materno = $request->input('apellido_materno');
-        $usuario->sexo = $request->input('sexo');
+        $usuario = User::find($id);
+        $usuario->name = $request->input('nombre');
         $usuario->email = $request->input('email');
+        $usuario->tipo = $request->input('tipo');
+        if($request->input('password') != null){
+            $usuario->password = Hash::make($request->input('password'));
+        }
+        // $usuario->password = Hash::make($request->input('password')); 
         $usuario->save();
-        return response(view('usuarios', ['usuarios' => Usuarios::all()]));
+        return response(view('usuarios', ['user' => User::all()]));
     }
 
     /**
@@ -104,8 +110,8 @@ class UsuariosController extends Controller
     public function destroy(Usuarios $usuarios, $id)
     {
         //
-        $usuario = Usuarios::find($id);
+        $usuario = User::find($id);
         $usuario->delete();
-        return response(view('usuarios', ['usuarios' => Usuarios::all()]));
+        return response(view('usuarios', ['user' => User::all()]));
     }
 }
