@@ -8,6 +8,7 @@ use App\Usuarios;
 use App\Empresa;
 use App\Modulo;
 use App\User;
+use Illuminate\Support\Facades\DB;
 
 class TicketsController extends Controller
 {
@@ -19,14 +20,37 @@ class TicketsController extends Controller
     public function index()
     {
         //
-        if(auth()->user()->tipo == 'Cliente'){
-            return response(view('tickets', ['tickets' => Tickets::where('admins_id', auth()->user()->id)->get()]));
+        if (auth()->user()->tipo == 'Cliente') {
+            $tickets = DB::table('tickets')
+            ->join('users', 'tickets.admins_id', '=', 'users.id')
+            ->join('empresas', 'users.empresa_id', '=', 'empresas.id')
+            ->select("users.*","tickets.id as ticketId", "tickets.created_at as fehca_ticket","tickets.*", "empresas.*")
+            ->where('admins_id', auth()->user()->id)
+            ->get();
+            return response(view('tickets', ['tickets' => $tickets]));
+            // return response(view('tickets', ['tickets' => Tickets::where('admins_id', auth()->user()->id)->get()]));
         }
-        if(auth()->user()->tipo == 'Admin'){
-            return response(view('tickets', ['tickets' => Tickets::all()]));
+        if (auth()->user()->tipo == 'Admin') {
+            // $tickets = Tickets::select("users.*","tickets.id as ticketId", "tickets.created_at as fehca_ticket","tickets.*")->join('users', 'tickets.admins_id', '=', 'users.id')->get();
+            // dd($tickets);
+            $tickets = DB::table('tickets')
+           ->join('users', 'tickets.admins_id', '=', 'users.id')
+           ->join('empresas', 'users.empresa_id', '=', 'empresas.id')
+           ->select("users.*","tickets.id as ticketId", "tickets.created_at as fehca_ticket","tickets.*", "empresas.*")
+           ->get();
+        //    dd($query);
+            return response(view('tickets', ['tickets' => $tickets]));
+            // return response(view('tickets', ['tickets' => Tickets::all()]));
         }
-        if(auth()->user()->tipo == 'Agente'){
-            return response(view('tickets', ['tickets' => Tickets::where('user_id', auth()->user()->id)->get()]));
+        if (auth()->user()->tipo == 'Agente') {
+            // return response(view('tickets', ['tickets' => Tickets::where('user_id', auth()->user()->id)->get()]));
+            $tickets = DB::table('tickets')
+            ->join('users', 'tickets.admins_id', '=', 'users.id')
+            ->join('empresas', 'users.empresa_id', '=', 'empresas.id')
+            ->select("users.*","tickets.id as ticketId", "tickets.created_at as fehca_ticket","tickets.*", "empresas.*")
+            ->where('user_id', auth()->user()->id)
+            ->get();
+            return response(view('tickets', ['tickets' => $tickets]));
         }
         // return response(view('tickets', ['tickets' => Tickets::all()]));
     }
@@ -50,14 +74,34 @@ class TicketsController extends Controller
             'estado' => 'NUEVO',
             'prioridad' => 'BAJA',
         ]);
-        if(auth()->user()->tipo == 'Cliente'){
-            return response(view('tickets', ['tickets' => Tickets::where('admins_id', auth()->user()->id)->get()]));
+        if (auth()->user()->tipo == 'Cliente') {
+            // return response(view('tickets', ['tickets' => Tickets::where('admins_id', auth()->user()->id)->get()]));
+            $tickets = DB::table('tickets')
+            ->join('users', 'tickets.admins_id', '=', 'users.id')
+            ->join('empresas', 'users.empresa_id', '=', 'empresas.id')
+            ->select("users.*","tickets.id as ticketId", "tickets.created_at as fehca_ticket","tickets.*", "empresas.*")
+            ->where('admins_id', auth()->user()->id)
+            ->get();
+            return response(view('tickets', ['tickets' => $tickets]));
         }
-        if(auth()->user()->tipo == 'Admin'){
-            return response(view('tickets', ['tickets' => Tickets::all()]));
+        if (auth()->user()->tipo == 'Admin') {
+            // return response(view('tickets', ['tickets' => Tickets::all()]));
+            $tickets = DB::table('tickets')
+            ->join('users', 'tickets.admins_id', '=', 'users.id')
+            ->join('empresas', 'users.empresa_id', '=', 'empresas.id')
+            ->select("users.*","tickets.id as ticketId", "tickets.created_at as fehca_ticket","tickets.*", "empresas.*")
+            ->get();
+            return response(view('tickets', ['tickets' => $tickets]));
         }
-        if(auth()->user()->tipo == 'Agente'){
-            return response(view('tickets', ['tickets' => Tickets::where('user_id', auth()->user()->id)->get()]));
+        if (auth()->user()->tipo == 'Agente') {
+            // return response(view('tickets', ['tickets' => Tickets::where('user_id', auth()->user()->id)->get()]));
+            $tickets = DB::table('tickets')
+            ->join('users', 'tickets.admins_id', '=', 'users.id')
+            ->join('empresas', 'users.empresa_id', '=', 'empresas.id')
+            ->select("users.*","tickets.id as ticketId", "tickets.created_at as fehca_ticket","tickets.*", "empresas.*")
+            ->where('user_id', auth()->user()->id)
+            ->get();
+            return response(view('tickets', ['tickets' => $tickets]));
         }
         // return response(view('tickets', ['tickets' => Tickets::all()]));
     }
@@ -97,21 +141,29 @@ class TicketsController extends Controller
     {
         //
         $prioridades = ['BAJA', 'MEDIA', 'ALTA'];
-        $status = ['NUEVO','AESPERA','ENPROG','PENDIENTE','CANCELADO','CERRADO'];
-        $ticket = Tickets::find($id);
+        $status = ['NUEVO', 'AESPERA', 'ENPROG', 'PENDIENTE', 'CANCELADO', 'CERRADO'];
+        // $ticket = Tickets::find($id);
+        // $ticket = Tickets::join('users', 'tickets.admins_id', '=', 'users.id')->where('tickets.id', $id)->get();
+        $ticket = DB::table('tickets')
+            ->join('users', 'tickets.admins_id', '=', 'users.id')
+            ->join('empresas', 'users.empresa_id', '=', 'empresas.id')
+            ->select("users.*","tickets.id as ticketId", "tickets.created_at as fehca_ticket","tickets.*", "empresas.*")
+            ->where('tickets.id', $id)
+            ->get();
+        // dd($ticket);
         $usuarios = User::where('tipo', 'Agente')->get();
-        if(auth()->user()->tipo == 'Cliente'){
+        if (auth()->user()->tipo == 'Cliente') {
             $empresa = Empresa::join('users', 'empresas.id', '=', 'users.empresa_id')->where('users.id', auth()->user()->id)->get();
-        }else{
-            $empresa = Empresa::join('users', 'empresas.id', '=', 'users.empresa_id')->where('users.id', $ticket->admins_id)->get();
+        } else {
+            $empresa = Empresa::join('users', 'empresas.id', '=', 'users.empresa_id')->where('users.id', $ticket[0]->admins_id)->get();
         }
-        $agente = User::where('id', $ticket->user_id)->get();
-        if($agente->isEmpty()){
+        $agente = User::where('id', $ticket[0]->user_id)->get();
+        if ($agente->isEmpty()) {
             $agente = 'No asignado';
-        }else{
+        } else {
             $agente = $agente[0]->name;
         }
-        $modulo = Modulo::where('id', $ticket->modulo_id)->get();
+        $modulo = Modulo::where('id', $ticket[0]->modulo_id)->get();
 
         return response(view('editticket', ['ticket' => $ticket, 'user' => $usuarios, 'empresa' => $empresa[0]->nombre, 'modulo' => $modulo, 'prioridades' => $prioridades, 'status' => $status, 'agente' => $agente]));
     }
@@ -128,29 +180,29 @@ class TicketsController extends Controller
         //
         $data = $request->all();
         $ticket = Tickets::find($id);
-        if(auth()->user()->tipo == 'Admin'){
+        if (auth()->user()->tipo == 'Admin') {
             $ticket->update([
                 'solucion' => $request->input('solucion'),
                 'prioridad' => $request->input('prioridad'),
                 'status' => $request->input('status'),
                 'user_id' => $request->input('agente'),
-    
+
             ]);
         }
-        if(auth()->user()->tipo == 'Agente'){
+        if (auth()->user()->tipo == 'Agente') {
             $ticket->update([
                 'solucion' => $request->input('solucion'),
                 'prioridad' => $request->input('prioridad'),
                 'status' => $request->input('status'),
             ]);
         }
-        if(auth()->user()->tipo == 'Cliente'){
+        if (auth()->user()->tipo == 'Cliente') {
             return response(view('tickets', ['tickets' => Tickets::where('admins_id', auth()->user()->id)->get()]));
         }
-        if(auth()->user()->tipo == 'Admin'){
+        if (auth()->user()->tipo == 'Admin') {
             return response(view('tickets', ['tickets' => Tickets::all()]));
         }
-        if(auth()->user()->tipo == 'Agente'){
+        if (auth()->user()->tipo == 'Agente') {
             return response(view('tickets', ['tickets' => Tickets::where('user_id', auth()->user()->id)->get()]));
         }
         // return response(view('tickets', ['tickets' => Tickets::all()]));

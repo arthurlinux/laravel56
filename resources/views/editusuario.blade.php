@@ -12,6 +12,12 @@
         <div class="form-group">
           <label for="nombre">Nombre</label>
           <input type="text" class="form-control" id="nombre" name="nombre" value="{{ $usuario->name }}">
+          <label for="apellido_paterno">Apellido Paterno</label>
+          <input type="text" class="form-control" id="apellido_paterno" name="apellido_paterno" value="{{ $usuario->apellido_paterno }}">
+          <label for="apellido_materno">Apellido Materno</label>
+          <input type="text" class="form-control" id="apellido_materno" name="apellido_materno" value="{{ $usuario->apellido_materno }}">
+          <label for="telefono">Teléfono</label>
+          <input type="text" class="form-control" id="telefono" name="telefono" value="{{ $usuario->telefono }}">
           <label for="email">Correo</label>
           <input type="email" class="form-control" id="email" name="email" value="{{ $usuario->email }}">
             <label for="tipo">Tipo</label>

@@ -7,6 +7,19 @@
                 <div class="card">
                     <div class="card-header">Nuevo ticket</div>
                     <div class="card-body">
+                        <div class="alert alert-info" role="alert">
+                            <h4 class="alert-heading">¡Bienvenido!</h4>
+                            <p>Por favor, complete el siguiente formulario para registrar un nuevo ticket.</p>
+                            <hr>
+                            <p class="mb-0">Si tiene alguna duda, por favor comuníquese con el administrador.</p>
+                            <label for="dtos_personales">Datos Personales</label><br>
+                            <label for="nombre">Nombre:
+                                {{ Auth::user()->name }} {{ Auth::user()->apellido_paterno }} {{ Auth::user()->apellido_materno }} 
+                            </label><br>
+                            <label for="telefono">Teléfono:
+                                {{ Auth::user()->telefono }}</label><br>
+                            <label for="email">Correo:  {{ Auth::user()->email }}</label>
+                        </div>
                         <form method="POST" action="{{ route('createticket') }}">
                             @csrf
                             <div class="form-group row">

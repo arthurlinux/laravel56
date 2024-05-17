@@ -19,32 +19,35 @@
                                     <th>Comentarios</th>
                                     <th>Estado</th>
                                     <th>Fecha</th>
-
+                                    <th>Cliente</th>
+                                    <th>Empresa</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($tickets as $ticket)
                                     <tr>
-                                        <td>{{ $ticket->id }}</td>
+                                        <td>{{ $ticket->ticketId }}</td>
                                         <td>{{ $ticket->titulo }}</td>
                                         <td>{{ $ticket->prioridad }}</td>
                                         <td>{{ $ticket->descripcion }}</td>
                                         <td>{{ $ticket->comentarios }}</td>
                                         <td>{{ $ticket->status }}</td>
                                         <td>{{ $ticket->created_at }}</td>
+                                        <td>{{ $ticket->name }} {{ $ticket->apellido_paterno }} {{ $ticket->apellido_materno }}</td>
+                                        <td>{{ $ticket->nombre }}</td>
                                         @if (Auth::user()->tipo === 'Agente' || Auth::user()->tipo === 'Admin')
                                             <td>
                                                 <button type="button" class="btn btn-link btn-rounded btn-sm fw-bold"
                                                     data-mdb-ripple-color="dark">
                                                     <a class="btn btn-primary"
-                                                        href="{{ route('editticket', $ticket->id) }}">Editar</a>
+                                                        href="{{ route('editticket', $ticket->ticketId) }}">Editar</a>
                                                 </button>
                                                 @if (Auth::user()->tipo === 'Admin')
                                                     <button type="button" class="btn btn-link btn-rounded btn-sm fw-bold"
                                                         data-mdb-ripple-color="dark">
                                                         <a class="btn btn-primary"
-                                                            href="{{ route('deleteticket', $ticket->id) }}">Eliminar</a>
+                                                            href="{{ route('deleteticket', $ticket->ticketId) }}">Eliminar</a>
                                                     </button>
                                                 @endif
 
@@ -55,7 +58,7 @@
                                                 <button type="button" class="btn btn-link btn-rounded btn-sm fw-bold"
                                                     data-mdb-ripple-color="dark">
                                                     <a class="btn btn-primary"
-                                                        href="{{ route('editticket', $ticket->id) }}">Ver</a>
+                                                        href="{{ route('editticket', $ticket->ticketId) }}">Ver</a>
                                                 </button>
                                             </td>
                                         @endif
