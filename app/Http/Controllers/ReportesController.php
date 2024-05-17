@@ -4,19 +4,46 @@ namespace App\Http\Controllers;
 
 use App\Reportes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\DataTables;
 
 class ReportesController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View // Modify the return type
      */
     public function index()
     {
-        //
-    }
 
+        return view('reportes');
+             
+    }
+    public function reporte()
+    {
+        //
+        $tickets = DB::table('tickets')
+        ->join('users', 'tickets.admins_id', '=', 'users.id')
+        ->join('empresas', 'users.empresa_id', '=', 'empresas.id')
+        ->select("users.*","tickets.id as ticketId", "tickets.created_at as fehca_ticket","tickets.*", "empresas.*")
+        ->get();
+        // return view('reportes', ['tickets' => $tickets]);
+
+        return DataTables::make($tickets)
+            ->addColumn('action', function($tickets){
+                $button = '<button type="button" name="edit" 
+                id="'.$tickets->id.'" class="edit btn btn-primary btn- 
+                sm">Edit</button>';
+                $button .= '&nbsp;&nbsp;';
+                $button .= '<button type="button" name="delete" 
+                id="'.$tickets->id.'" class="delete btn btn-danger btn- 
+                sm">Delete</button>';
+                return $button;
+            })
+            ->rawColumns(['action'])
+            ->toJson();
+    }
     /**
      * Show the form for creating a new resource.
      *

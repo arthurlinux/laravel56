@@ -79,14 +79,15 @@
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ route('modulos') }}">{{ __('Modulos') }}</a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('reportes') }}">{{ __('Reportes') }}</a>
+                                    </li>
                                     @endif
 
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ route('tickets') }}">{{ __('Tickets') }}</a>
                                     </li>
-                                    {{-- <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('createusuario') }}">{{ __('Crear usuario') }}</a>
-                                    </li> --}}
+
                                     
                                 </div>
                             </li>

@@ -22,7 +22,7 @@
                             <label for="email">Correo: {{ $ticket[0]->email }}</label>
                         </div>
 
-                        <form method="POST" action="{{ route('updateticket', $ticket[0]->id) }}">
+                        <form method="POST" action="{{ route('updateticket', $ticket[0]->ticketId) }}">
                             @csrf
                             <div class="form-group">
                                 <h4><label for="id">ID:{{ $ticket[0]->ticketId }}</label></h4><br>
@@ -38,7 +38,7 @@
                                 @if (Auth::user()->tipo === 'Admin')
                                     <label for="usuario">Asignar agente: </label>
                                     <select class="form-control" id="agente" name="agente">
-                                        <option value=""></option>
+                                        
                                         @foreach ($user as $agente)
                                             <option value="{{ $agente->id }}">{{ $agente->name }}</option>
                                         @endforeach

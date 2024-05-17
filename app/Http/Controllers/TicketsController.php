@@ -196,14 +196,37 @@ class TicketsController extends Controller
                 'status' => $request->input('status'),
             ]);
         }
+         
         if (auth()->user()->tipo == 'Cliente') {
-            return response(view('tickets', ['tickets' => Tickets::where('admins_id', auth()->user()->id)->get()]));
+            $tickets = DB::table('tickets')
+            ->join('users', 'tickets.admins_id', '=', 'users.id')
+            ->join('empresas', 'users.empresa_id', '=', 'empresas.id')
+            ->select("users.*","tickets.id as ticketId", "tickets.created_at as fehca_ticket","tickets.*", "empresas.*")
+            ->where('admins_id', auth()->user()->id)
+            ->get();
+            return response(view('tickets', ['tickets' => $tickets]));
+            // return response(view('tickets', ['tickets' => Tickets::where('admins_id', auth()->user()->id)->get()]));
         }
         if (auth()->user()->tipo == 'Admin') {
-            return response(view('tickets', ['tickets' => Tickets::all()]));
+            $tickets = DB::table('tickets')
+            ->join('users', 'tickets.admins_id', '=', 'users.id')
+            ->join('empresas', 'users.empresa_id', '=', 'empresas.id')
+            ->select("users.*","tickets.id as ticketId", "tickets.created_at as fehca_ticket","tickets.*", "empresas.*")
+            ->get();
+         //    dd($query);
+             return response(view('tickets', ['tickets' => $tickets]));
+            // return response(view('tickets', ['tickets' => Tickets::all()]));
         }
         if (auth()->user()->tipo == 'Agente') {
-            return response(view('tickets', ['tickets' => Tickets::where('user_id', auth()->user()->id)->get()]));
+            // dd(auth()->user()->id);  
+            // return response(view('tickets', ['tickets' => Tickets::where('user_id', auth()->user()->id)->get()]));
+            $tickets = DB::table('tickets')
+            ->join('users', 'tickets.admins_id', '=', 'users.id')
+            ->join('empresas', 'users.empresa_id', '=', 'empresas.id')
+            ->select("users.*","tickets.id as ticketId", "tickets.created_at as fehca_ticket","tickets.*", "empresas.*")
+            ->where('user_id', auth()->user()->id)
+            ->get();
+            return response(view('tickets', ['tickets' => $tickets]));
         }
         // return response(view('tickets', ['tickets' => Tickets::all()]));
     }

@@ -51,7 +51,8 @@ Route::group(['prefix' => 'admin'], function(){
   Route::get('/getticket', 'TicketsController@store')->name('getticket');
   Route::post('/createticket', 'TicketsController@create')->name('createticket');
   Route::get('/deleteticket/{id}', 'TicketsController@destroy')->name('deleteticket');
-  
 
+  Route::get('/reportes', 'ReportesController@index')->name('reportes');
+  Route::get('/reporte', 'ReportesController@reporte')->name('reporte');
 
 });
