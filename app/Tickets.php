@@ -20,5 +20,6 @@ class Tickets extends Model
         'imagen',
         'fecha',
         'hora',
+        'solucion',
     ];
 }

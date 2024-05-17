@@ -30,11 +30,11 @@
                                     class="col-md-4 col-form-label text-md-right">{{ __('Descripción') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="descripcion" type="text"
+                                    {{-- <input id="descripcion" type="text"
                                         class="form-control{{ $errors->has('descripcion') ? ' is-invalid' : '' }}"
-                                        name="descripcion" value="{{ old('descripcion') }}" required autofocus>
-
-                                    @if ($errors->has('name'))
+                                        name="descripcion" value="{{ old('descripcion') }}" required autofocus> --}}
+                                    <textarea class="form-control" name="descripcion" id="descripcion" rows="3"></textarea>
+                                    @if ($errors->has('descripcion'))
                                         <span class="invalid-feedback">
                                             <strong>{{ $errors->first('descripcion') }}</strong>
                                         </span>
@@ -43,18 +43,30 @@
                             </div>
                             <div class="form-group row">
                                 <label for="comentarios"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Comentarios') }}</label>
+                                    class="col-md-4 col-form-label text-md-right">{{ __('Sugerencia') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="comentarios" type="text"
+                                    {{-- <input id="comentarios" type="text"
                                         class="form-control{{ $errors->has('comentarios') ? ' is-invalid' : '' }}"
-                                        name="comentarios" value="{{ old('comentarios') }}" required autofocus>
+                                        name="comentarios" value="{{ old('comentarios') }}" required autofocus> --}}
+                                    <textarea class="form-control" name="comentarios" id="comentarios" rows="3"></textarea>
 
-                                    @if ($errors->has('name'))
+                                    @if ($errors->has('comentarios'))
                                         <span class="invalid-feedback">
                                             <strong>{{ $errors->first('comentarios') }}</strong>
                                         </span>
                                     @endif
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="modulo"
+                                    class="col-md-4 col-form-label text-md-right">{{ __('Módulo') }}</label>
+                                <div class="col-md-6">
+                                    <select class="form-control" id="modulo" name="modulo">
+                                        @foreach ($modulos as $modulo)
+                                            <option value="{{ $modulo->id }}">{{ $modulo->modulo }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group row">

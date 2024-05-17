@@ -19,7 +19,16 @@ class TicketsController extends Controller
     public function index()
     {
         //
-        return response(view('tickets', ['tickets' => Tickets::all()]));
+        if(auth()->user()->tipo == 'Cliente'){
+            return response(view('tickets', ['tickets' => Tickets::where('admins_id', auth()->user()->id)->get()]));
+        }
+        if(auth()->user()->tipo == 'Admin'){
+            return response(view('tickets', ['tickets' => Tickets::all()]));
+        }
+        if(auth()->user()->tipo == 'Agente'){
+            return response(view('tickets', ['tickets' => Tickets::where('user_id', auth()->user()->id)->get()]));
+        }
+        // return response(view('tickets', ['tickets' => Tickets::all()]));
     }
 
     /**
@@ -36,10 +45,21 @@ class TicketsController extends Controller
             'titulo' => $request->input('titulo'),
             'descripcion' => $request->input('descripcion'),
             'comentarios' => $request->input('comentarios'),
+            'admins_id' => auth()->user()->id,
+            'modulo_id' => $request->input('modulo'),
             'estado' => 'NUEVO',
             'prioridad' => 'BAJA',
         ]);
-        return response(view('tickets', ['tickets' => Tickets::all()]));
+        if(auth()->user()->tipo == 'Cliente'){
+            return response(view('tickets', ['tickets' => Tickets::where('admins_id', auth()->user()->id)->get()]));
+        }
+        if(auth()->user()->tipo == 'Admin'){
+            return response(view('tickets', ['tickets' => Tickets::all()]));
+        }
+        if(auth()->user()->tipo == 'Agente'){
+            return response(view('tickets', ['tickets' => Tickets::where('user_id', auth()->user()->id)->get()]));
+        }
+        // return response(view('tickets', ['tickets' => Tickets::all()]));
     }
 
 
@@ -52,7 +72,8 @@ class TicketsController extends Controller
     public function store(Request $request)
     {
         //
-        return response(view('createticket'));
+        $modulos = Modulo::all();
+        return response(view('createticket', ['modulos' => $modulos]));
     }
 
     /**
@@ -76,11 +97,23 @@ class TicketsController extends Controller
     {
         //
         $prioridades = ['BAJA', 'MEDIA', 'ALTA'];
+        $status = ['NUEVO','AESPERA','ENPROG','PENDIENTE','CANCELADO','CERRADO'];
         $ticket = Tickets::find($id);
         $usuarios = User::where('tipo', 'Agente')->get();
-        $empresas = Empresa::all();
-        $modulos = Modulo::all();
-        return response(view('editticket', ['ticket' => $ticket, 'user' => $usuarios, 'empresas' => $empresas, 'modulos' => $modulos, 'prioridades' => $prioridades]));
+        if(auth()->user()->tipo == 'Cliente'){
+            $empresa = Empresa::join('users', 'empresas.id', '=', 'users.empresa_id')->where('users.id', auth()->user()->id)->get();
+        }else{
+            $empresa = Empresa::join('users', 'empresas.id', '=', 'users.empresa_id')->where('users.id', $ticket->admins_id)->get();
+        }
+        $agente = User::where('id', $ticket->user_id)->get();
+        if($agente->isEmpty()){
+            $agente = 'No asignado';
+        }else{
+            $agente = $agente[0]->name;
+        }
+        $modulo = Modulo::where('id', $ticket->modulo_id)->get();
+
+        return response(view('editticket', ['ticket' => $ticket, 'user' => $usuarios, 'empresa' => $empresa[0]->nombre, 'modulo' => $modulo, 'prioridades' => $prioridades, 'status' => $status, 'agente' => $agente]));
     }
 
     /**
@@ -95,18 +128,32 @@ class TicketsController extends Controller
         //
         $data = $request->all();
         $ticket = Tickets::find($id);
-        $ticket->update([
-            'titulo' => $request->input('titulo'),
-            'descripcion' => $request->input('descripcion'),
-            'comentarios' => $request->input('comentarios'),
-            'estado' => $request->input('estado'),
-            'prioridad' => $request->input('prioridad'),
-            'user_id' => $request->input('usuario'),
-            'modulo_id' => $request->input('modulo'),
-            'admins_id' => $request->input('admins_id'),
-
-        ]);
-        return response(view('tickets', ['tickets' => Tickets::all()]));
+        if(auth()->user()->tipo == 'Admin'){
+            $ticket->update([
+                'solucion' => $request->input('solucion'),
+                'prioridad' => $request->input('prioridad'),
+                'status' => $request->input('status'),
+                'user_id' => $request->input('agente'),
+    
+            ]);
+        }
+        if(auth()->user()->tipo == 'Agente'){
+            $ticket->update([
+                'solucion' => $request->input('solucion'),
+                'prioridad' => $request->input('prioridad'),
+                'status' => $request->input('status'),
+            ]);
+        }
+        if(auth()->user()->tipo == 'Cliente'){
+            return response(view('tickets', ['tickets' => Tickets::where('admins_id', auth()->user()->id)->get()]));
+        }
+        if(auth()->user()->tipo == 'Admin'){
+            return response(view('tickets', ['tickets' => Tickets::all()]));
+        }
+        if(auth()->user()->tipo == 'Agente'){
+            return response(view('tickets', ['tickets' => Tickets::where('user_id', auth()->user()->id)->get()]));
+        }
+        // return response(view('tickets', ['tickets' => Tickets::all()]));
     }
 
     /**

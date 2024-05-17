@@ -87,6 +87,17 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="empresa" class="col-md-4 col-form-label text-md-right">{{ __('Empresa') }}</label>
+                            <div class="col-md-6">
+                                <select name="empresa" id="empresa" class="form-control">
+                                    @foreach ($empresas as $empresa)
+                                        <option value="{{ $empresa->id }}">{{ $empresa->nombre }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Contraseña') }}</label>
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>

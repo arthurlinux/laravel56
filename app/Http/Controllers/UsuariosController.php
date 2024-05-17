@@ -6,6 +6,7 @@ use App\Usuarios;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Empresa;
 
 class UsuariosController extends Controller
 {
@@ -37,6 +38,7 @@ class UsuariosController extends Controller
             // ...
 
             'tipo' => $request->input('tipo'),
+            'empresa_id' => $request->input('empresa'),
             'password' => Hash::make($request->input('password')),
         ]);
         return response(view('usuarios', ['user' => User::all()]));
@@ -50,7 +52,8 @@ class UsuariosController extends Controller
      */
     public function store(Request $request)
     {
-        return response(view('createusuario'));
+        $empresas = Empresa::all();
+        return response(view('createusuario', ['empresas' => $empresas]));
     }
 
     /**
@@ -75,7 +78,8 @@ class UsuariosController extends Controller
     {
         //
         $usuario = User::find($id);
-        return response(view('editusuario', ['usuario' => $usuario]));
+        $empresas = Empresa::all();
+        return response(view('editusuario', ['usuario' => $usuario], ['empresas' => $empresas]));
     }
 
     /**
