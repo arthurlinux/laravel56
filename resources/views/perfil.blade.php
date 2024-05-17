@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-12">
+        <div class="col-md-8">
             <div class="card">
                 <div class="card-header">Dashboard</div>
 
@@ -14,12 +14,10 @@
                         </div>
                     @endif
 
-                    Hola, {{ Auth::user()->name }}  ¡Estás conectado!
+                    Hola, {{ Auth::user()->name }}  ¡Ha iniciado sesión, administrador!
                     <p>
                       Email : {{ Auth::user()->email }}
                     </p>
-                    <p>
-                      Tipo : {{ Auth::user()->tipo }}
                 </div>
             </div>
         </div>
