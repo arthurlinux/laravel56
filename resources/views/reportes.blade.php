@@ -42,8 +42,9 @@
                                         <th>Solución</th>
                                         <th>Prioridad</th>
                                         <th>Status</th>
-                                        <th>Nombre</th>
+                                        <th>Nombre Cliente</th>
                                         <th>Empresa</th>
+                                        <th>Agente</th>
                                         <th>Fecha</th>
                                         {{-- <th>Acción</th> --}}
                                     </tr>
@@ -59,20 +60,26 @@
                             // }
                             $(function($) {
 
-                                // $.ajaxSetup({
-                                //     headers: {
-                                //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                //     }
-                                // });
+                                $.ajaxSetup({
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    }
+                                });
 
                                 $('.display').DataTable({
                                     responsive: true,
                                     processing: true,
                                     serverSide: true,
-                                    dom: 'Bfrtip',
+                                    lengthChange: true,
+                                    dom: 'lBfrtip',
                                     buttons: [
                                         'copy', 'csv', 'excel', 'pdf'
                                     ],
+                                    // lengthMenu: [
+                                    //     [50, 100 - 1],
+                                    //     [50, 100, "All"]
+                                    // ],
+                                    // pageLength: 50,
                                     ajax: "{!! route('reporte') !!}",
                                     columns: [{
                                             data: 'ticketId',
@@ -103,12 +110,16 @@
                                             name: 'status'
                                         },
                                         {
-                                            data: 'name',
-                                            name: 'name'
+                                            data: 'nombreCliente',
+                                            name: 'nombreCliente'
                                         },
                                         {
-                                            data: 'nombre',
-                                            name: 'nombre'
+                                            data: 'empresa',
+                                            name: 'empresa'
+                                        },
+                                        {
+                                            data: 'agente',
+                                            name: 'agente'
                                         },
                                         {
                                             data: 'fehca_ticket',

@@ -17,6 +17,13 @@ class ReportesController extends Controller
     public function index()
     {
 
+        $tickets = DB::table('tickets')
+        ->join('users', 'tickets.admins_id', '=', 'users.id')
+        ->join('empresas', 'users.empresa_id', '=', 'empresas.id')
+        ->leftJoin('users as de', 'de.id', '=', 'tickets.user_id')
+        ->select("users.name as nombreCliente","tickets.id as ticketId", "tickets.created_at as fehca_ticket","tickets.*", "empresas.nombre as empresa" , "de.name as agente")
+        ->get();
+        // dd($tickets);
         return view('reportes');
              
     }
@@ -26,8 +33,10 @@ class ReportesController extends Controller
         $tickets = DB::table('tickets')
         ->join('users', 'tickets.admins_id', '=', 'users.id')
         ->join('empresas', 'users.empresa_id', '=', 'empresas.id')
-        ->select("users.*","tickets.id as ticketId", "tickets.created_at as fehca_ticket","tickets.*", "empresas.*")
+        ->leftJoin('users as de', 'de.id', '=', 'tickets.user_id')
+        ->select("users.name as nombreCliente","tickets.id as ticketId", "tickets.created_at as fehca_ticket","tickets.*", "empresas.nombre as empresa" , "de.name as agente")
         ->get();
+        // dd($tickets);
         // return view('reportes', ['tickets' => $tickets]);
 
         return DataTables::make($tickets)
