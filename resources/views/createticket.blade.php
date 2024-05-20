@@ -20,7 +20,7 @@
                                 {{ Auth::user()->telefono }}</label><br>
                             <label for="email">Correo:  {{ Auth::user()->email }}</label>
                         </div>
-                        <form method="POST" action="{{ route('createticket') }}">
+                        <form method="POST" action="{{ route('createticket') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group row">
                                 <label for="titulo"
@@ -85,7 +85,7 @@
                             <div class="form-group row">
                                 <label for="imagen"
                                     class="col-md-4 col-form-label text-md-right">{{ __('Imagen') }}</label>
-                                <input type="file" name="upload[]" id="imagen" class="form-control">
+                                <input type="file" name="upload[]" id="imagen" multiple class="form-control">
                             </div>
 
                             <div class="form-group row mb-0">

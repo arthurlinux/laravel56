@@ -35,6 +35,14 @@
                                 <label for="modulo">Módulo: {{ $modulo[0]->modulo }}</label></br>
                                 <label for="modulo">Empresa: {{ $empresa }}</label></br>
                                 <label for="modulo">Agente Asignado: {{ $agente }}</label></br>
+                                <label >Imagenes</label><br>
+                                @foreach ($images as $image)
+                                <a href="{{ asset('images/' . $image->nombre) }}" target="_blank">
+                                    <img  class="full" src="{{ asset('images/' . $image->nombre) }}" alt="100px" width="100px">
+                                </a>
+
+                                @endforeach
+                                <br>
                                 @if (Auth::user()->tipo === 'Admin')
                                     <label for="usuario">Asignar agente: </label>
                                     <select class="form-control" id="agente" name="agente">

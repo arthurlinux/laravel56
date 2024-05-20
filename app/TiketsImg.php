@@ -8,7 +8,7 @@ class TiketsImg extends Model
 {
     //
     protected $fillable = [
-        'ticket_id',
+        'tiket_id',
         'nombre',
     ];
 }
