@@ -43,6 +43,11 @@
                                                     <a class="btn btn-primary"
                                                         href="{{ route('editticket', $ticket->ticketId) }}">Editar</a>
                                                 </button>
+                                                <button type="button" class="btn btn-link btn-rounded btn-sm fw-bold"
+                                                data-mdb-ripple-color="dark">
+                                                <a class="btn btn-primary"
+                                                    href="{{ route('editcomentario', $ticket->ticketId) }}">Agregar comentario</a>
+                                            </button>
                                                 @if (Auth::user()->tipo === 'Admin')
                                                     <button type="button" class="btn btn-link btn-rounded btn-sm fw-bold"
                                                         data-mdb-ripple-color="dark">

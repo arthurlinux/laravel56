@@ -18,9 +18,9 @@ class ReportesController extends Controller
     {
 
         $tickets = DB::table('tickets')
-        ->join('users', 'tickets.admins_id', '=', 'users.id')
+        ->join('users', 'tickets.cliente_id', '=', 'users.id')
         ->join('empresas', 'users.empresa_id', '=', 'empresas.id')
-        ->leftJoin('users as de', 'de.id', '=', 'tickets.user_id')
+        ->leftJoin('users as de', 'de.id', '=', 'tickets.agente_id')
         ->select("users.name as nombreCliente","tickets.id as ticketId", "tickets.created_at as fehca_ticket","tickets.*", "empresas.nombre as empresa" , "de.name as agente")
         ->get();
         // dd($tickets);
@@ -31,9 +31,9 @@ class ReportesController extends Controller
     {
         //
         $tickets = DB::table('tickets')
-        ->join('users', 'tickets.admins_id', '=', 'users.id')
+        ->join('users', 'tickets.cliente_id', '=', 'users.id')
         ->join('empresas', 'users.empresa_id', '=', 'empresas.id')
-        ->leftJoin('users as de', 'de.id', '=', 'tickets.user_id')
+        ->leftJoin('users as de', 'de.id', '=', 'tickets.agente_id')
         ->select("users.name as nombreCliente","tickets.id as ticketId", "tickets.created_at as fehca_ticket","tickets.*", "empresas.nombre as empresa" , "de.name as agente")
         ->get();
         // dd($tickets);

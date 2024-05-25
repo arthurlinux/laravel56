@@ -55,4 +55,12 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function(){
   Route::get('/reportes', 'ReportesController@index')->name('reportes');
   Route::get('/reporte', 'ReportesController@reporte')->name('reporte');
 
+  Route::get('/comentarios', 'ComentariosController@index')->name('comentarios');
+  Route::get('/editcomentario/{id}', 'ComentariosController@edit')->name('editcomentario');
+  Route::post('/updatecomentario/{id}', 'ComentariosController@update')->name('updatecomentario');
+  Route::get('/getcomentario', 'ComentariosController@store')->name('getcomentario');
+  Route::post('/createcomentario', 'ComentariosController@create')->name('createcomentario');
+  Route::get('/deletecomentario/{id}', 'ComentariosController@destroy')->name('deletecomentario');
+  
+
 });
